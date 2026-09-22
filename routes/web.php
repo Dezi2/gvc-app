@@ -22,19 +22,30 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Serves images from public/images/ through Laravel so they work
 | regardless of the web server's static file configuration.
+|
+| Also handles the common Windows-rename artifact where filenames
+| accidentally have a leading or trailing space.
 */
 Route::get('/img/{folder}/{filename}', function ($folder, $filename) {
     // Sanitize inputs to prevent directory traversal
     $folder   = basename($folder);
     $filename = basename($filename);
 
-    $path = public_path("images/{$folder}/{$filename}");
+    // Candidate paths — try each in order
+    $candidates = [
+        public_path("images/{$folder}/{$filename}"),           // exact
+        public_path("images/{$folder}/ {$filename}"),          // leading space
+        public_path("images/{$folder}/{$filename} "),          // trailing space
+        public_path("images/{$folder}/" . trim($filename)),    // trimmed
+    ];
 
-    if (!file_exists($path)) {
-        abort(404);
+    foreach ($candidates as $path) {
+        if (file_exists($path)) {
+            return response()->file($path);
+        }
     }
 
-    return response()->file($path);
+    abort(404);
 })->where('filename', '.*');
 
 /*
