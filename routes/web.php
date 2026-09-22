@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductionProcessController;
 use App\Http\Controllers\ProfileController;
@@ -20,23 +21,16 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | IMAGE SERVING ROUTE
 |--------------------------------------------------------------------------
-| Serves images from public/images/ through Laravel so they work
-| regardless of the web server's static file configuration.
-|
-| Also handles the common Windows-rename artifact where filenames
-| accidentally have a leading or trailing space.
 */
 Route::get('/img/{folder}/{filename}', function ($folder, $filename) {
-    // Sanitize inputs to prevent directory traversal
     $folder   = basename($folder);
     $filename = basename($filename);
 
-    // Candidate paths — try each in order
     $candidates = [
-        public_path("images/{$folder}/{$filename}"),           // exact
-        public_path("images/{$folder}/ {$filename}"),          // leading space
-        public_path("images/{$folder}/{$filename} "),          // trailing space
-        public_path("images/{$folder}/" . trim($filename)),    // trimmed
+        public_path("images/{$folder}/{$filename}"),
+        public_path("images/{$folder}/ {$filename}"),
+        public_path("images/{$folder}/{$filename} "),
+        public_path("images/{$folder}/" . trim($filename)),
     ];
 
     foreach ($candidates as $path) {
@@ -62,7 +56,7 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('produc
 Route::get('/how-its-made', [ProductionProcessController::class, 'index'])->name('process.index');
 Route::get('/how-its-made/{slug}', [ProductionProcessController::class, 'show'])->name('process.show');
 
-// Contact page (POST is rate-limited: max 5 messages per minute per IP)
+// Contact page
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'send'])
     ->middleware('throttle:5,1')
@@ -94,13 +88,17 @@ Route::middleware('auth')->group(function () {
     // My Orders
     Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/my-orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+    // Payments
+    Route::get('/payment/paystack/{order}',    [PaymentController::class, 'payWithPaystack'])->name('payment.paystack');
+    Route::get('/payment/flutterwave/{order}', [PaymentController::class, 'payWithFlutterwave'])->name('payment.flutterwave');
+    Route::get('/payment/callback',            [PaymentController::class, 'handleCallback'])->name('payment.callback');
 });
 
 /*
 |--------------------------------------------------------------------------
 | DASHBOARD
 |--------------------------------------------------------------------------
-| Admins are redirected to /admin. Customers are redirected to the homepage.
 */
 Route::get('/dashboard', function () {
     if (auth()->user()->isAdmin()) {
@@ -131,21 +129,15 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-        // Categories CRUD
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
-
-        // Products CRUD
         Route::resource('products', AdminProductController::class)->except(['show']);
 
-        // Orders
         Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::patch('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
-        // Production Process CRUD
         Route::resource('processes', AdminProcessController::class)->except(['show']);
 
-        // Contact Messages
         Route::get('messages', [AdminContactMessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{message}', [AdminContactMessageController::class, 'show'])->name('messages.show');
         Route::patch('messages/{message}/toggle-read', [AdminContactMessageController::class, 'toggleRead'])->name('messages.toggleRead');

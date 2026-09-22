@@ -14,24 +14,6 @@
 
     <div class="max-w-7xl mx-auto px-4 py-10">
 
-        {{-- STEPS INDICATOR --}}
-        <div class="hidden md:flex items-center justify-center gap-4 mb-8 text-sm">
-            <div class="flex items-center gap-2 text-gray-400">
-                <span class="w-7 h-7 rounded-full bg-green-700 text-white flex items-center justify-center font-semibold">1</span>
-                <span>Cart</span>
-            </div>
-            <div class="w-12 h-0.5 bg-green-700"></div>
-            <div class="flex items-center gap-2 text-green-800 font-semibold">
-                <span class="w-7 h-7 rounded-full bg-green-700 text-white flex items-center justify-center font-semibold">2</span>
-                <span>Delivery</span>
-            </div>
-            <div class="w-12 h-0.5 bg-gray-300"></div>
-            <div class="flex items-center gap-2 text-gray-400">
-                <span class="w-7 h-7 rounded-full bg-gray-300 text-white flex items-center justify-center font-semibold">3</span>
-                <span>Confirmation</span>
-            </div>
-        </div>
-
         <form action="{{ route('checkout.place') }}" method="POST">
             @csrf
 
@@ -45,15 +27,11 @@
                         <h2 class="text-lg font-bold text-gray-800 mb-4">Contact Information</h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                            {{-- FULL NAME --}}
                             <div>
                                 <label for="full_name" class="block text-sm font-medium text-gray-700 mb-1">
                                     Full Name <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text"
-                                       name="full_name"
-                                       id="full_name"
+                                <input type="text" name="full_name" id="full_name"
                                        value="{{ old('full_name', $user->name) }}"
                                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('full_name') border-red-500 @enderror">
                                 @error('full_name')
@@ -61,14 +39,11 @@
                                 @enderror
                             </div>
 
-                            {{-- PHONE --}}
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
                                     Phone Number <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text"
-                                       name="phone"
-                                       id="phone"
+                                <input type="text" name="phone" id="phone"
                                        value="{{ old('phone', $user->phone) }}"
                                        placeholder="e.g. 08012345678"
                                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('phone') border-red-500 @enderror">
@@ -77,14 +52,11 @@
                                 @enderror
                             </div>
 
-                            {{-- EMAIL --}}
                             <div class="md:col-span-2">
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
                                     Email Address <span class="text-red-600">*</span>
                                 </label>
-                                <input type="email"
-                                       name="email"
-                                       id="email"
+                                <input type="email" name="email" id="email"
                                        value="{{ old('email', $user->email) }}"
                                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('email') border-red-500 @enderror">
                                 @error('email')
@@ -99,15 +71,11 @@
                         <h2 class="text-lg font-bold text-gray-800 mb-4">Delivery Address</h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                            {{-- ADDRESS --}}
                             <div class="md:col-span-2">
                                 <label for="delivery_address" class="block text-sm font-medium text-gray-700 mb-1">
                                     Street Address <span class="text-red-600">*</span>
                                 </label>
-                                <textarea name="delivery_address"
-                                          id="delivery_address"
-                                          rows="2"
+                                <textarea name="delivery_address" id="delivery_address" rows="2"
                                           placeholder="House number, street, area..."
                                           class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('delivery_address') border-red-500 @enderror">{{ old('delivery_address', $user->address) }}</textarea>
                                 @error('delivery_address')
@@ -115,14 +83,11 @@
                                 @enderror
                             </div>
 
-                            {{-- CITY --}}
                             <div>
                                 <label for="city" class="block text-sm font-medium text-gray-700 mb-1">
                                     City <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text"
-                                       name="city"
-                                       id="city"
+                                <input type="text" name="city" id="city"
                                        value="{{ old('city') }}"
                                        placeholder="e.g. Lagos"
                                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('city') border-red-500 @enderror">
@@ -131,14 +96,11 @@
                                 @enderror
                             </div>
 
-                            {{-- STATE --}}
                             <div>
                                 <label for="state" class="block text-sm font-medium text-gray-700 mb-1">
                                     State <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text"
-                                       name="state"
-                                       id="state"
+                                <input type="text" name="state" id="state"
                                        value="{{ old('state') }}"
                                        placeholder="e.g. Lagos State"
                                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('state') border-red-500 @enderror">
@@ -149,6 +111,60 @@
                         </div>
                     </div>
 
+                    {{-- PAYMENT METHOD --}}
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+                        <h2 class="text-lg font-bold text-gray-800 mb-4">Payment Method</h2>
+
+                        {{-- Pay on Delivery is the active method --}}
+                        <input type="hidden" name="payment_method" value="pod">
+
+                        <div class="space-y-3">
+                            <label class="flex items-start p-4 border-2 border-green-500 bg-green-50/60 rounded-lg">
+                                <input type="radio" name="payment_method_display" value="pod" checked disabled
+                                       class="h-4 w-4 mt-1 text-green-600 focus:ring-green-500">
+                                <span class="ml-3 flex-1">
+                                    <span class="block font-semibold text-gray-800">Pay on Delivery (POD)</span>
+                                    <span class="block text-xs text-gray-500 mt-0.5">
+                                        Pay with cash when your order is delivered to your door. Our delivery team will contact you before arrival.
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+
+                        @error('payment_method')
+                            <p class="text-red-600 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+
+                        {{--
+                            ========================================================
+                            ONLINE PAYMENT GATEWAYS — Currently disabled.
+                            To enable: change @if(false) to @if(true) below
+                            and add the Paystack/Flutterwave keys to your .env
+                            ========================================================
+                        --}}
+                        @if (false)
+                            <div class="space-y-3 mt-3">
+                                <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-green-400 hover:bg-green-50/40 transition">
+                                    <input type="radio" name="payment_method" value="paystack"
+                                           class="h-4 w-4 mt-1 text-green-600 focus:ring-green-500">
+                                    <span class="ml-3 flex-1">
+                                        <span class="block font-semibold text-gray-800">Pay with Paystack</span>
+                                        <span class="block text-xs text-gray-500 mt-0.5">Securely pay with card, bank transfer, or USSD.</span>
+                                    </span>
+                                </label>
+
+                                <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-green-400 hover:bg-green-50/40 transition">
+                                    <input type="radio" name="payment_method" value="flutterwave"
+                                           class="h-4 w-4 mt-1 text-green-600 focus:ring-green-500">
+                                    <span class="ml-3 flex-1">
+                                        <span class="block font-semibold text-gray-800">Pay with Flutterwave</span>
+                                        <span class="block text-xs text-gray-500 mt-0.5">Securely pay with card, bank, or mobile money.</span>
+                                    </span>
+                                </label>
+                            </div>
+                        @endif
+                    </div>
+
                     {{-- NOTES --}}
                     <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
                         <h2 class="text-lg font-bold text-gray-800 mb-4">Additional Notes</h2>
@@ -156,9 +172,7 @@
                         <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">
                             Order Notes <span class="text-gray-400 text-xs">(optional)</span>
                         </label>
-                        <textarea name="notes"
-                                  id="notes"
-                                  rows="3"
+                        <textarea name="notes" id="notes" rows="3"
                                   placeholder="Any special instructions for your delivery..."
                                   class="w-full border-gray-300 rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 @error('notes') border-red-500 @enderror">{{ old('notes') }}</textarea>
                         @error('notes')
@@ -173,7 +187,6 @@
                     <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sticky top-24">
                         <h2 class="text-lg font-bold text-gray-800 mb-4">Your Order</h2>
 
-                        {{-- ITEMS --}}
                         <div class="space-y-3 border-b border-gray-100 pb-4 max-h-72 overflow-y-auto">
                             @foreach ($items as $item)
                                 <div class="flex items-center gap-3 text-sm">
@@ -199,7 +212,6 @@
                             @endforeach
                         </div>
 
-                        {{-- TOTALS --}}
                         <div class="space-y-2 py-4 text-sm">
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Subtotal</span>
@@ -220,7 +232,6 @@
                             </span>
                         </div>
 
-                        {{-- PLACE ORDER BUTTON --}}
                         <button type="submit"
                                 class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-medium py-3 rounded transition">
                             Place Order

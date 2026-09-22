@@ -14,16 +14,13 @@ class OrderController extends Controller
     // Show the checkout form
     public function checkout()
     {
-        // If cart is empty, don't let them check out
         if (Cart::isEmpty()) {
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty.');
         }
 
-        // Validate stock before showing the form
         foreach (Cart::all() as $item) {
             $product = Product::find($item['id']);
-
             if (!$product || $product->stock_quantity < $item['quantity']) {
                 Cart::remove($item['id']);
                 return redirect()->route('cart.index')
@@ -41,13 +38,11 @@ class OrderController extends Controller
     // Handle the checkout form submission
     public function placeOrder(Request $request)
     {
-        // 1. Check cart isn't empty
         if (Cart::isEmpty()) {
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty.');
         }
 
-        // 2. Validate delivery info
         $validated = $request->validate([
             'full_name'        => 'required|string|max:255',
             'phone'            => 'required|string|max:20',
@@ -56,19 +51,19 @@ class OrderController extends Controller
             'city'             => 'required|string|max:100',
             'state'            => 'required|string|max:100',
             'notes'            => 'nullable|string|max:1000',
+            'payment_method'   => 'required|in:pod,paystack,flutterwave',
         ]);
 
-        // 3. Re-verify stock for every item
+        // Re-verify stock for every item
         foreach (Cart::all() as $item) {
             $product = Product::find($item['id']);
-
             if (!$product || $product->stock_quantity < $item['quantity']) {
                 return redirect()->route('cart.index')
                     ->with('error', 'Sorry, stock changed for one of your items. Please review your cart.');
             }
         }
 
-        // 4. Create the order inside a database transaction
+        // Create the order inside a database transaction
         $order = DB::transaction(function () use ($validated) {
             $subtotal = Cart::subtotal();
 
@@ -77,6 +72,8 @@ class OrderController extends Controller
                 'order_number'     => $this->generateOrderNumber(),
                 'total_amount'     => $subtotal,
                 'status'           => 'pending',
+                'payment_method'   => $validated['payment_method'],
+                'payment_status'   => $validated['payment_method'] === 'pod' ? 'pending' : 'unpaid',
                 'full_name'        => $validated['full_name'],
                 'phone'            => $validated['phone'],
                 'email'            => $validated['email'],
@@ -86,7 +83,7 @@ class OrderController extends Controller
                 'notes'            => $validated['notes'] ?? null,
             ]);
 
-            // 5. Save each cart item as an order_item, and reduce stock
+            // Save each cart item as an order_item, and reduce stock
             foreach (Cart::all() as $item) {
                 $order->items()->create([
                     'product_id'   => $item['id'],
@@ -96,7 +93,6 @@ class OrderController extends Controller
                     'subtotal'     => $item['price'] * $item['quantity'],
                 ]);
 
-                // Reduce product stock
                 $product = Product::find($item['id']);
                 if ($product) {
                     $product->decrement('stock_quantity', $item['quantity']);
@@ -106,11 +102,26 @@ class OrderController extends Controller
             return $order;
         });
 
-        // 6. Clear the cart
+        // Clear the cart
         Cart::clear();
 
-        return redirect()->route('orders.show', $order)
-            ->with('success', 'Order placed successfully! Your order number is ' . $order->order_number);
+        // Redirect based on payment method
+        $method = $validated['payment_method'];
+
+        if ($method === 'pod') {
+            return redirect()->route('orders.show', $order)
+                ->with('success', 'Order placed successfully! You will pay on delivery.');
+        }
+
+        if ($method === 'paystack') {
+            return redirect()->route('payment.paystack', $order);
+        }
+
+        if ($method === 'flutterwave') {
+            return redirect()->route('payment.flutterwave', $order);
+        }
+
+        return redirect()->route('orders.show', $order);
     }
 
     // List all orders for the logged-in customer
@@ -127,7 +138,6 @@ class OrderController extends Controller
     // Show a single order (only if it belongs to the logged-in user)
     public function show(Order $order)
     {
-        // Authorization: the customer can only see their own orders
         if ($order->user_id !== auth()->id()) {
             abort(403);
         }

@@ -158,7 +158,7 @@
                         <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
                             <a href="{{ route('products.show', $item->slug) }}">
                                 @if ($item->image)
-                                    <img src="{{ asset('storage/' . $item->image) }}"
+                                    <img src="{{ url('/img/products/' . $item->image) }}"
                                          alt="{{ $item->name }}"
                                          class="w-full h-40 object-cover">
                                 @else
