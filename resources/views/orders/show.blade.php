@@ -22,7 +22,7 @@
 
     <div class="max-w-7xl mx-auto px-4 py-10">
 
-        {{-- SUCCESS MESSAGE (shown right after placing order) --}}
+        {{-- SUCCESS MESSAGE --}}
         @if (session('success'))
             <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-5 flex items-start gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-700 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -31,9 +31,7 @@
                 <div>
                     <h2 class="font-semibold text-green-800">Order placed successfully!</h2>
                     <p class="text-sm text-green-700 mt-1">{{ session('success') }}</p>
-                    <p class="text-sm text-green-700 mt-1">
-                        We'll contact you shortly to confirm delivery.
-                    </p>
+                    <p class="text-sm text-green-700 mt-1">We'll contact you shortly to confirm delivery.</p>
                 </div>
             </div>
         @endif
@@ -56,7 +54,6 @@
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0">
                     @foreach ($statuses as $index => $status)
                         <div class="flex items-center flex-1">
-                            {{-- DOT --}}
                             <div class="flex items-center gap-2 flex-shrink-0">
                                 @if ($index <= $currentIndex)
                                     <div class="w-8 h-8 rounded-full bg-green-700 text-white flex items-center justify-center text-xs font-bold">
@@ -72,7 +69,6 @@
                                 </span>
                             </div>
 
-                            {{-- CONNECTOR --}}
                             @if (!$loop->last)
                                 <div class="hidden sm:block flex-1 h-0.5 mx-2 {{ $index < $currentIndex ? 'bg-green-700' : 'bg-gray-200' }}"></div>
                             @endif
@@ -84,7 +80,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            {{-- LEFT: ORDER ITEMS + DELIVERY --}}
+            {{-- LEFT: ITEMS + DELIVERY --}}
             <div class="lg:col-span-2 space-y-6">
 
                 {{-- ITEMS --}}
@@ -111,7 +107,6 @@
                         @endforeach
                     </div>
 
-                    {{-- TOTAL --}}
                     <div class="px-6 py-4 bg-gray-50 flex justify-between items-center">
                         <span class="font-semibold text-gray-700">Total</span>
                         <span class="text-xl font-bold text-green-800">
@@ -173,6 +168,12 @@
                             <dt class="text-gray-600">Items</dt>
                             <dd class="text-gray-800">{{ $order->items->sum('quantity') }}</dd>
                         </div>
+                        <div class="flex justify-between">
+                            <dt class="text-gray-600">Payment</dt>
+                            <dd class="text-gray-800">
+                                {{ strtoupper($order->payment_method ?? 'POD') }}
+                            </dd>
+                        </div>
                         <div class="flex justify-between pt-3 border-t border-gray-100">
                             <dt class="font-semibold text-gray-800">Total</dt>
                             <dd class="font-bold text-green-800 text-lg">
@@ -188,8 +189,8 @@
                         Questions about your order? We're happy to help.
                     </p>
                     <ul class="text-xs text-gray-600 space-y-1">
-                        <li>Email: attu2000us@yahoo.com</li>
-                        <li>Phone: 08033120273</li>
+                        <li>Email: info@gvc.com</li>
+                        <li>Phone: 0800-GVC-EGUSI</li>
                     </ul>
                 </div>
 

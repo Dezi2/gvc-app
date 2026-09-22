@@ -15,7 +15,6 @@
     <div class="max-w-7xl mx-auto px-4 py-10">
 
         @if ($orders->isEmpty())
-            {{-- EMPTY STATE --}}
             <div class="text-center py-16 bg-gray-50 rounded-lg">
                 <div class="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -30,7 +29,6 @@
                 </a>
             </div>
         @else
-            {{-- ORDERS LIST --}}
             <div class="space-y-4">
                 @foreach ($orders as $order)
                     <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
@@ -43,7 +41,6 @@
                                         {{ $order->order_number }}
                                     </span>
 
-                                    {{-- STATUS BADGE --}}
                                     @php
                                         $statusColors = [
                                             'pending'    => 'bg-yellow-100 text-yellow-800',
@@ -55,7 +52,7 @@
                                         ];
                                         $color = $statusColors[$order->status] ?? 'bg-gray-100 text-gray-800';
                                     @endphp
-                                    <span class="px-2 py-1 rounded text-xs font-medium {{ $color }}">
+                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $color }}">
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </div>
@@ -86,7 +83,6 @@
                 @endforeach
             </div>
 
-            {{-- PAGINATION --}}
             <div class="mt-8 flex justify-center">
                 {{ $orders->links() }}
             </div>
