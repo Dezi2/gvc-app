@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductionProcess;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductionProcessController extends Controller
@@ -36,7 +35,7 @@ class ProductionProcessController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('processes', 'public');
+            $validated['image'] = $this->saveImage($request->file('image'));
         }
 
         ProductionProcess::create($validated);
@@ -64,10 +63,8 @@ class ProductionProcessController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($request->hasFile('image')) {
-            if ($process->image && Storage::disk('public')->exists($process->image)) {
-                Storage::disk('public')->delete($process->image);
-            }
-            $validated['image'] = $request->file('image')->store('processes', 'public');
+            $this->deleteImage($process->image);
+            $validated['image'] = $this->saveImage($request->file('image'));
         }
 
         $process->update($validated);
@@ -79,13 +76,30 @@ class ProductionProcessController extends Controller
     // DELETE
     public function destroy(ProductionProcess $process)
     {
-        if ($process->image && Storage::disk('public')->exists($process->image)) {
-            Storage::disk('public')->delete($process->image);
-        }
-
+        $this->deleteImage($process->image);
         $process->delete();
 
         return redirect()->route('admin.processes.index')
             ->with('success', 'Production stage deleted successfully.');
+    }
+
+    // Save uploaded file into public/images/processes/ — returns filename
+    private function saveImage($file): string
+    {
+        $folder = public_path('images/processes');
+        if (!file_exists($folder)) {
+            mkdir($folder, 0755, true);
+        }
+        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9._-]/', '_', $file->getClientOriginalName());
+        $file->move($folder, $filename);
+        return $filename;
+    }
+
+    // Delete a process image from public/images/processes/
+    private function deleteImage(?string $filename): void
+    {
+        if (!$filename) return;
+        $path = public_path('images/processes/' . $filename);
+        if (file_exists($path)) unlink($path);
     }
 }

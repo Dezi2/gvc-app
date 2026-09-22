@@ -50,7 +50,7 @@
                                     {{-- IMAGE --}}
                                     <td class="px-5 py-3">
                                         @if ($process->image)
-                                            <img src="{{ asset('storage/' . $process->image) }}"
+                                            <img src="{{ asset('images/processes/' . $process->image) }}"
                                                  alt="{{ $process->title }}"
                                                  class="w-14 h-14 object-cover rounded border border-gray-200">
                                         @else
