@@ -11,6 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust all proxies (Railway's reverse proxy) so Laravel detects HTTPS correctly
+        $middleware->trustProxies(at: '*');
+
+        // Our custom admin middleware alias
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
