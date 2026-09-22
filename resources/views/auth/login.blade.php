@@ -1,6 +1,11 @@
+@section('title', 'Login')
+
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <h1 class="text-xl font-bold text-gray-800 mb-1">Welcome Back</h1>
+    <p class="text-sm text-gray-500 mb-6">Log in to your Global Value Chain account.</p>
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -27,14 +32,14 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-green-700 shadow-sm focus:ring-green-500" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-end mt-6">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                <a class="underline text-sm text-gray-600 hover:text-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
@@ -42,6 +47,11 @@
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-600">
+            Don't have an account?
+            <a href="{{ route('register') }}" class="text-green-700 hover:underline font-medium">Register</a>
         </div>
     </form>
 </x-guest-layout>

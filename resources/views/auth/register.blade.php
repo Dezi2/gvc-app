@@ -1,4 +1,9 @@
+@section('title', 'Create Account')
+
 <x-guest-layout>
+    <h1 class="text-xl font-bold text-gray-800 mb-1">Create Your Account</h1>
+    <p class="text-sm text-gray-500 mb-6">Join Global Value Chain and start ordering premium egusi today.</p>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -39,8 +44,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+        <div class="flex items-center justify-end mt-6">
+            <a class="underline text-sm text-gray-600 hover:text-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 

@@ -1,7 +1,10 @@
+@section('title', 'Forgot Password')
+
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+    <h1 class="text-xl font-bold text-gray-800 mb-1">Forgot Password?</h1>
+    <p class="text-sm text-gray-500 mb-6">
+        No problem. Enter your email address and we'll send you a link to reset your password.
+    </p>
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -16,8 +19,12 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+        <div class="flex items-center justify-end mt-6">
+            <a class="underline text-sm text-gray-600 hover:text-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" href="{{ route('login') }}">
+                {{ __('Back to Login') }}
+            </a>
+
+            <x-primary-button class="ms-4">
                 {{ __('Email Password Reset Link') }}
             </x-primary-button>
         </div>

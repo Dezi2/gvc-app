@@ -68,12 +68,14 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 | DASHBOARD
 |--------------------------------------------------------------------------
+| Admins are redirected to /admin. Customers are redirected to the homepage.
+| This route exists mainly for backward compatibility — Breeze links to it.
 */
 Route::get('/dashboard', function () {
     if (auth()->user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     }
-    return view('dashboard');
+    return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
 
 /*

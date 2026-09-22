@@ -15,7 +15,7 @@
     <div class="bg-green-900 text-green-100 text-xs">
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
             <span>Fresh from our farms across Nigeria</span>
-            <span class="hidden sm:inline">Call us: 0800-GVC-EGUSI</span>
+            <span class="hidden sm:inline">Call us: 08033120273</span>
         </div>
     </div>
 
@@ -145,9 +145,9 @@
             <div>
                 <h3 class="text-white font-bold mb-3">Contact</h3>
                 <ul class="space-y-1 text-sm text-green-200">
-                    <li>Email: info@gvc.com</li>
-                    <li>Phone: 0800-GVC-EGUSI</li>
-                    <li>Location: Lagos, Nigeria</li>
+                    <li>Email: attu2000us@yahoo.com</li>
+                    <li>Phone: 08033120273</li>
+                    <li>Location: Abuja, Nigeria</li>
                 </ul>
             </div>
         </div>

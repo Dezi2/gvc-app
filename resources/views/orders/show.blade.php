@@ -188,8 +188,8 @@
                         Questions about your order? We're happy to help.
                     </p>
                     <ul class="text-xs text-gray-600 space-y-1">
-                        <li>Email: info@gvc.com</li>
-                        <li>Phone: 0800-GVC-EGUSI</li>
+                        <li>Email: attu2000us@yahoo.com</li>
+                        <li>Phone: 08033120273</li>
                     </ul>
                 </div>
 

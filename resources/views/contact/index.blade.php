@@ -30,8 +30,7 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-800 mb-1">Email Us</h3>
-                        <p class="text-sm text-gray-600">info@gvc.com</p>
-                        <p class="text-sm text-gray-600">sales@gvc.com</p>
+                        <p class="text-sm text-gray-600">attu2000us@yahoo.com</p>
                     </div>
                 </div>
 
@@ -44,7 +43,7 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-800 mb-1">Call Us</h3>
-                        <p class="text-sm text-gray-600">0800-GVC-EGUSI</p>
+                        <p class="text-sm text-gray-600">08033120273</p>
                         <p class="text-sm text-gray-600">Mon – Sat, 8am – 6pm</p>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                     <div>
                         <h3 class="font-semibold text-gray-800 mb-1">Visit Us</h3>
                         <p class="text-sm text-gray-600">Global Value Chain HQ</p>
-                        <p class="text-sm text-gray-600">Lagos, Nigeria</p>
+                        <p class="text-sm text-gray-600">Abuja, Nigeria</p>
                     </div>
                 </div>
 

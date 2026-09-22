@@ -1,4 +1,9 @@
+@section('title', 'Reset Password')
+
 <x-guest-layout>
+    <h1 class="text-xl font-bold text-gray-800 mb-1">Set a New Password</h1>
+    <p class="text-sm text-gray-500 mb-6">Choose a strong password to secure your account.</p>
+
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
@@ -24,13 +29,13 @@
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+                            type="password"
+                            name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-end mt-6">
             <x-primary-button>
                 {{ __('Reset Password') }}
             </x-primary-button>
