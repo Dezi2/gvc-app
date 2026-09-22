@@ -12,24 +12,24 @@
 <body class="bg-white font-sans antialiased text-gray-800 flex flex-col min-h-screen">
 
     {{-- TOP BAR (small green strip) --}}
-    <div class="bg-green-900 text-green-100 text-xs">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
-            <span>Fresh from our farms across Nigeria</span>
+    <div class="bg-green-900 text-green-100 text-xs top-bar">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+            <span class="text-center sm:text-left">Fresh from our farms across Nigeria</span>
             <span class="hidden sm:inline">Call us: 08033120273</span>
         </div>
     </div>
 
     {{-- HEADER / NAVBAR --}}
     <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4">
+            <div class="flex items-center justify-between min-h-[64px] gap-2 py-2">
 
                 {{-- LOGO --}}
-                <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded-full bg-green-700 text-white flex items-center justify-center font-bold">G</div>
-                    <div class="leading-tight">
-                        <div class="font-bold text-green-800">Global Value Chain</div>
-                        <div class="text-xs text-gray-500">Premium Nigerian Egusi</div>
+                <a href="{{ route('home') }}" class="flex items-center gap-2 min-w-0">
+                    <div class="w-9 h-9 rounded-full bg-green-700 text-white flex items-center justify-center font-bold shrink-0">G</div>
+                    <div class="leading-tight min-w-0">
+                        <div class="font-bold text-green-800 text-sm sm:text-base truncate">Global Value Chain</div>
+                        <div class="text-[10px] sm:text-xs text-gray-500 truncate">Premium Nigerian Egusi</div>
                     </div>
                 </a>
 
@@ -58,10 +58,10 @@
                 </nav>
 
                 {{-- RIGHT SIDE: CART + AUTH --}}
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
 
                     {{-- CART --}}
-                    <a href="{{ route('cart.index') }}" class="relative text-gray-700 hover:text-green-800">
+                    <a href="{{ route('cart.index') }}" class="relative text-gray-700 hover:text-green-800 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -101,7 +101,7 @@
                     @endauth
 
                     {{-- MOBILE MENU BUTTON --}}
-                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 text-2xl leading-none">&#9776;</button>
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 text-2xl leading-none p-1 shrink-0">&#9776;</button>
                 </div>
             </div>
         </div>
