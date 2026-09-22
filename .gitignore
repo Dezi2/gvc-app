@@ -32,3 +32,4 @@ Thumbs.db
 # the compiled CSS/JS to serve the site without running Vite.
 # Do NOT add "/public/build" to this file.
 # =============================================================
+/public/storage
