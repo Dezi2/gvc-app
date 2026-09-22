@@ -6,26 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    // READ (list all products)
     public function index()
     {
         $products = Product::with('category')->latest()->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
-    // Show the CREATE form
     public function create()
     {
         $categories = Category::orderBy('name')->get();
         return view('admin.products.create', compact('categories'));
     }
 
-    // CREATE (save new product)
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -38,13 +34,10 @@ class ProductController extends Controller
             'status'         => 'required|in:active,inactive',
         ]);
 
-        // Auto-generate slug from name
         $validated['slug'] = Str::slug($validated['name']);
 
-        // Handle image upload (if provided)
         if ($request->hasFile('image')) {
-            // Store inside storage/app/public/products
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $validated['image'] = $this->saveImage($request->file('image'));
         }
 
         Product::create($validated);
@@ -53,14 +46,12 @@ class ProductController extends Controller
             ->with('success', 'Product created successfully.');
     }
 
-    // Show the UPDATE form
     public function edit(Product $product)
     {
         $categories = Category::orderBy('name')->get();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    // UPDATE (save changes)
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -75,12 +66,9 @@ class ProductController extends Controller
 
         $validated['slug'] = Str::slug($validated['name']);
 
-        // If a new image was uploaded, delete the old one and store the new one
         if ($request->hasFile('image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $this->deleteImage($product->image);
+            $validated['image'] = $this->saveImage($request->file('image'));
         }
 
         $product->update($validated);
@@ -89,17 +77,30 @@ class ProductController extends Controller
             ->with('success', 'Product updated successfully.');
     }
 
-    // DELETE
     public function destroy(Product $product)
     {
-        // Remove the image file from storage
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
-        }
-
+        $this->deleteImage($product->image);
         $product->delete();
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    private function saveImage($file): string
+    {
+        $folder = public_path('images/products');
+        if (!file_exists($folder)) {
+            mkdir($folder, 0755, true);
+        }
+        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9._-]/', '_', $file->getClientOriginalName());
+        $file->move($folder, $filename);
+        return $filename;
+    }
+
+    private function deleteImage(?string $filename): void
+    {
+        if (!$filename) return;
+        $path = public_path('images/products/' . $filename);
+        if (file_exists($path)) unlink($path);
     }
 }

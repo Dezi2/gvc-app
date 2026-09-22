@@ -178,7 +178,7 @@
                             @foreach ($items as $item)
                                 <div class="flex items-center gap-3 text-sm">
                                     @if ($item['image'])
-                                        <img src="{{ asset('storage/' . $item['image']) }}"
+                                        <img src="{{ asset('images/products/' . $item['image']) }}"
                                              alt="{{ $item['name'] }}"
                                              class="w-12 h-12 rounded object-cover border border-gray-200 flex-shrink-0">
                                     @else

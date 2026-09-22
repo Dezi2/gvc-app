@@ -135,7 +135,7 @@
 
                         @if ($product->image)
                             <div class="flex items-center gap-4 mb-3">
-                                <img src="{{ asset('storage/' . $product->image) }}"
+                                <img src="{{ asset('images/products/' . $product->image) }}"
                                      alt="{{ $product->name }}"
                                      class="w-24 h-24 object-cover rounded border border-gray-200">
                                 <div class="text-xs text-gray-500">

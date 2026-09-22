@@ -100,7 +100,7 @@
                         <a href="{{ route('products.show', $product->slug) }}" class="block relative">
                             @if ($product->image)
                                 <div class="overflow-hidden">
-                                    <img src="{{ asset('storage/' . $product->image) }}"
+                                    <img src="{{ asset('images/products/' . $product->image) }}"
                                          alt="{{ $product->name }}"
                                          class="w-full h-52 object-cover transition-transform duration-500 ease-out hover:scale-110">
                                 </div>
