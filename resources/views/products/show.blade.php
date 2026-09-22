@@ -30,7 +30,7 @@
             <div>
                 <div class="bg-gray-100 rounded-lg overflow-hidden border border-gray-100">
                     @if ($product->image)
-                        <img src="{{ asset('images/products/' . $product->image) }}"
+                        <img src="{{ url('/img/products/' . $product->image) }}"
                              alt="{{ $product->name }}"
                              class="w-full h-96 md:h-[500px] object-cover">
                     @else

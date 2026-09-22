@@ -112,7 +112,7 @@
                         {{-- IMAGE --}}
                         <a href="{{ route('products.show', $product->slug) }}" class="block">
                             @if ($product->image)
-                                <img src="{{ asset('images/products/' . $product->image) }}"
+                                <img src="{{ url('/img/products/' . $product->image) }}"
                                      alt="{{ $product->name }}"
                                      class="w-full h-48 object-cover">
                             @else

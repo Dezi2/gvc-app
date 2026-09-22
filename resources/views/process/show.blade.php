@@ -40,7 +40,7 @@
                 {{-- IMAGE --}}
                 @if ($process->image)
                     <div class="rounded-lg overflow-hidden shadow-sm border border-gray-100">
-                        <img src="{{ asset('images/processes/' . $process->image) }}"
+                        <img src="{{ url('/img/processes/' . $process->image) }}"
                              alt="{{ $process->title }}"
                              class="w-full h-80 md:h-[450px] object-cover">
                     </div>

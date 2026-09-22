@@ -18,6 +18,27 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
+| IMAGE SERVING ROUTE
+|--------------------------------------------------------------------------
+| Serves images from public/images/ through Laravel so they work
+| regardless of the web server's static file configuration.
+*/
+Route::get('/img/{folder}/{filename}', function ($folder, $filename) {
+    // Sanitize inputs to prevent directory traversal
+    $folder   = basename($folder);
+    $filename = basename($filename);
+
+    $path = public_path("images/{$folder}/{$filename}");
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->where('filename', '.*');
+
+/*
+|--------------------------------------------------------------------------
 | PUBLIC ROUTES
 |--------------------------------------------------------------------------
 */
@@ -69,7 +90,6 @@ Route::middleware('auth')->group(function () {
 | DASHBOARD
 |--------------------------------------------------------------------------
 | Admins are redirected to /admin. Customers are redirected to the homepage.
-| This route exists mainly for backward compatibility — Breeze links to it.
 */
 Route::get('/dashboard', function () {
     if (auth()->user()->isAdmin()) {

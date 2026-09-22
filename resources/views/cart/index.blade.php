@@ -41,7 +41,7 @@
                             <a href="{{ route('products.show', $item['slug']) }}"
                                class="flex-shrink-0">
                                 @if ($item['image'])
-                                    <img src="{{ asset('images/products/' . $item['image']) }}"
+                                    <img src="{{ url('/img/products/' . $item['image']) }}"
                                          alt="{{ $item['name'] }}"
                                          class="w-20 h-20 object-cover rounded border border-gray-200">
                                 @else

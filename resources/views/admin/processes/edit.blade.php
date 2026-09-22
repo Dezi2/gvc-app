@@ -72,7 +72,7 @@
 
                         @if ($process->image)
                             <div class="flex items-center gap-3 mb-2">
-                                <img src="{{ asset('images/processes/' . $process->image) }}"
+                                <img src="{{ url('/img/processes/' . $process->image) }}"
                                      alt="{{ $process->title }}"
                                      class="w-16 h-16 object-cover rounded border border-gray-200">
                                 <span class="text-xs text-gray-500">Current image</span>

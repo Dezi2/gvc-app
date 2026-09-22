@@ -42,7 +42,7 @@
                                     {{-- IMAGE --}}
                                     <td class="px-5 py-3">
                                         @if ($product->image)
-                                            <img src="{{ asset('images/products/' . $product->image) }}"
+                                            <img src="{{ url('/img/products/' . $product->image) }}"
                                                  alt="{{ $product->name }}"
                                                  class="w-14 h-14 object-cover rounded border border-gray-200">
                                         @else

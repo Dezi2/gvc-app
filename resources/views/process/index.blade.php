@@ -51,7 +51,7 @@
 
                                 {{-- Image or placeholder --}}
                                 @if ($process->image)
-                                    <img src="{{ asset('images/processes/' . $process->image) }}"
+                                    <img src="{{ url('/img/processes/' . $process->image) }}"
                                          alt="{{ $process->title }}"
                                          class="w-full h-72 md:h-96 object-cover rounded-lg shadow-md border border-gray-100">
                                 @else
