@@ -26,7 +26,19 @@
 
                 {{-- LOGO --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded-full bg-green-700 text-white flex items-center justify-center font-bold">G</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-10 h-10 flex-shrink-0">
+                        <defs>
+                            <linearGradient id="gvcHeader" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#22c55e"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="48" fill="url(#gvcHeader)"/>
+                        <path d="M50 82 C 30 74 20 55 30 36 C 38 25 44 22 50 22 C 56 22 62 25 70 36 C 80 55 70 74 50 82 Z" fill="#ffffff"/>
+                        <path d="M50 30 L50 76" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path d="M50 42 Q43 47 39 52 M50 42 Q57 47 61 52 M50 55 Q44 59 41 64 M50 55 Q56 59 59 64"
+                              stroke="#15803d" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                    </svg>
                     <div class="leading-tight">
                         <div class="font-bold text-green-800">Global Value Chain</div>
                         <div class="text-xs text-gray-500">Premium Nigerian Egusi</div>
@@ -156,7 +168,20 @@
     <footer class="bg-green-900 text-green-100 mt-12">
         <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h3 class="text-white font-bold text-lg mb-3">Global Value Chain</h3>
+                <div class="flex items-center gap-2 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8 flex-shrink-0">
+                        <defs>
+                            <linearGradient id="gvcFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#22c55e"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="48" fill="url(#gvcFooter)"/>
+                        <path d="M50 82 C 30 74 20 55 30 36 C 38 25 44 22 50 22 C 56 22 62 25 70 36 C 80 55 70 74 50 82 Z" fill="#ffffff"/>
+                        <path d="M50 30 L50 76" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    </svg>
+                    <h3 class="text-white font-bold text-lg">Global Value Chain</h3>
+                </div>
                 <p class="text-sm text-green-200">
                     From our farms to your kitchen — premium Nigerian egusi, produced with care and delivered fresh.
                 </p>

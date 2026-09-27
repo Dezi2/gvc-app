@@ -13,9 +13,22 @@
         {{-- SIDEBAR --}}
         <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-green-800 text-white transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-200">
             <div class="flex items-center justify-between p-4 border-b border-green-700">
-                <div>
-                    <h1 class="text-xl font-bold">GVC Admin</h1>
-                    <p class="text-xs text-green-200">Global Value Chain</p>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-9 h-9 flex-shrink-0">
+                        <defs>
+                            <linearGradient id="gvcAdmin" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#22c55e"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="48" fill="url(#gvcAdmin)"/>
+                        <path d="M50 82 C 30 74 20 55 30 36 C 38 25 44 22 50 22 C 56 22 62 25 70 36 C 80 55 70 74 50 82 Z" fill="#ffffff"/>
+                        <path d="M50 30 L50 76" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    </svg>
+                    <div class="leading-tight">
+                        <h1 class="text-lg font-bold">GVC Admin</h1>
+                        <p class="text-xs text-green-200">Global Value Chain</p>
+                    </div>
                 </div>
                 <button id="close-sidebar" class="lg:hidden text-white text-2xl leading-none">&times;</button>
             </div>
