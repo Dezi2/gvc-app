@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,13 +20,26 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register(): void
     {
         $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
+            'name'                  => 'Test User',
+            'email'                 => 'test@example.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('home'));
+    }
+
+    public function test_new_users_are_assigned_customer_role(): void
+    {
+        $this->post('/register', [
+            'name'                  => 'New Customer',
+            'email'                 => 'newcustomer@example.com',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $user = User::where('email', 'newcustomer@example.com')->first();
+        $this->assertEquals('customer', $user->role);
     }
 }
